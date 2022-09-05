@@ -137,7 +137,7 @@ func (suite *GorseClientTestSuite) TestRecommend() {
 			},
 		},
 	})
-	resp, err := suite.client.GetRecommend("100", "", 10)
+	resp, err := suite.client.GetRecommend("100", "", 10, "", "")
 	suite.NoError(err)
 	suite.Equal([]string{"3", "2", "1"}, resp)
 }

@@ -47,8 +47,8 @@ func (c *GorseClient) ListFeedbacks(feedbackType, userId string) ([]Feedback, er
 	return request[[]Feedback, any](c, "GET", c.entryPoint+fmt.Sprintf("/api/user/"+userId+"/feedback/"+feedbackType), nil)
 }
 
-func (c *GorseClient) GetRecommend(userId string, category string, n int) ([]string, error) {
-	return request[[]string, any](c, "GET", c.entryPoint+fmt.Sprintf("/api/recommend/%s/%s?n=%d", userId, category, n), nil)
+func (c *GorseClient) GetRecommend(userId string, category string, n int, writeBackType string, writeBackDelay string) ([]string, error) {
+	return request[[]string, any](c, "GET", c.entryPoint+fmt.Sprintf("/api/recommend/%s/%s?n=%d&write-back-type=%s&write-back-delay=%s", userId, category, n, writeBackType, writeBackDelay), nil)
 }
 
 func (c *GorseClient) SessionRecommend(feedbacks []Feedback, n int) ([]Score, error) {
