@@ -60,6 +60,26 @@ func (suite *GorseClientTestSuite) TestFeedback() {
 	suite.NoError(err)
 	suite.Equal(1, insertFeedbackResp.RowAffected)
 
+	upsertFeedbackResp, err := suite.client.UpsertFeedback([]Feedback{{
+		FeedbackType: "read",
+		UserId:       userId,
+		Timestamp:    timestamp,
+		ItemId:       "200",
+	}})
+	suite.NoError(err)
+	suite.Equal(1, upsertFeedbackResp.RowAffected)
+
+	feedbacks, err := suite.client.ListFeedbacks("read", userId)
+	suite.NoError(err)
+	suite.ElementsMatch([]Feedback{
+		{
+			FeedbackType: "read",
+			UserId:       userId,
+			Timestamp:    timestamp,
+			ItemId:       "200",
+		},
+	}, feedbacks)
+
 	insertFeedbacksResp, err := suite.client.InsertFeedback([]Feedback{{
 		FeedbackType: "read",
 		UserId:       userId,
@@ -74,7 +94,7 @@ func (suite *GorseClientTestSuite) TestFeedback() {
 	suite.NoError(err)
 	suite.Equal(2, insertFeedbacksResp.RowAffected)
 
-	feedbacks, err := suite.client.ListFeedbacks("read", userId)
+	feedbacks, err = suite.client.ListFeedbacks("read", userId)
 	suite.NoError(err)
 	suite.ElementsMatch([]Feedback{
 		{

@@ -39,6 +39,10 @@ func (c *GorseClient) InsertFeedback(feedbacks []Feedback) (RowAffected, error) 
 	return request[RowAffected](c, "POST", c.entryPoint+"/api/feedback", feedbacks)
 }
 
+func (c *GorseClient) UpsertFeedback(feedbacks []Feedback) (RowAffected, error) {
+	return request[RowAffected](c, "PUT", c.entryPoint+"/api/feedback", feedbacks)
+}
+
 func (c *GorseClient) ListFeedbacks(feedbackType, userId string) ([]Feedback, error) {
 	return request[[]Feedback, any](c, "GET", c.entryPoint+fmt.Sprintf("/api/user/"+userId+"/feedback/"+feedbackType), nil)
 }
