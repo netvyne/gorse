@@ -80,6 +80,15 @@ func (suite *GorseClientTestSuite) TestFeedback() {
 		},
 	}, feedbacks)
 
+	upsertFeedbackResp, err = suite.client.UpsertFeedback([]Feedback{{
+		FeedbackType: "like",
+		UserId:       userId,
+		Timestamp:    timestamp,
+		ItemId:       "200",
+	}})
+	suite.NoError(err)
+	suite.Equal(1, upsertFeedbackResp.RowAffected)
+
 	insertFeedbacksResp, err := suite.client.InsertFeedback([]Feedback{{
 		FeedbackType: "read",
 		UserId:       userId,
